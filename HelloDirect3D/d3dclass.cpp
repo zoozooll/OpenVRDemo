@@ -14,6 +14,10 @@ D3DClass::D3DClass()
 	m_depthStencilState = 0;
 	m_depthStencilView = 0;
 	m_rasterState = 0;
+	m_Camera = 0;
+	m_Model = 0;
+	//m_ColorShader = 0;
+	m_TextureShader = NULL;
 }
 
 
@@ -25,6 +29,7 @@ D3DClass::D3DClass(const D3DClass& other)
 D3DClass::~D3DClass()
 {
 }
+
 
 
 bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fullscreen,
@@ -347,6 +352,55 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Create an orthographic projection matrix for 2D rendering.
 	m_orthoMatrix = XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
 
+	// Create the camera object.
+	m_Camera = new CameraClass;
+	if (!m_Camera)
+	{
+		return false;
+	}
+
+	// Set the initial position of the camera.
+	m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
+
+	// Create the color model object.
+	//m_Model = new ModelClass;
+	// Create the texture model object.
+	m_Model = new TextureModel();
+	if (!m_Model)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_Model->Initialize(m_device, m_deviceContext, "stone01.tga");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the color shader object.
+	/*m_ColorShader = new ColorShaderClass;
+	if (!m_ColorShader)
+	{
+	return false;
+	}*/
+
+	// Initialize the color shader object.
+	//result = m_ColorShader->Initialize(m_Direct3D->GetDevice(), hwnd);
+	// Initialize the texture shader object
+	m_TextureShader = new TextureShaderClass();
+	if (!m_TextureShader)
+	{
+		MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
+		return false;
+	}
+	result = m_TextureShader->Initialize(m_device, hwnd);
+	if (!result)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -407,6 +461,37 @@ void D3DClass::Shutdown()
 		m_swapChain = 0;
 	}
 
+	// Release the color shader object.
+	/*if (m_ColorShader)
+	{
+	m_ColorShader->Shutdown();
+	delete m_ColorShader;
+	m_ColorShader = 0;
+	}*/
+
+	// Release the texture shader object.
+	if (m_TextureShader)
+	{
+		m_TextureShader->Shutdown();
+		delete m_TextureShader;
+		m_TextureShader = 0;
+	}
+
+	// Release the model object.
+	if (m_Model)
+	{
+		m_Model->Shutdown();
+		delete m_Model;
+		m_Model = 0;
+	}
+
+	// Release the camera object.
+	if (m_Camera)
+	{
+		delete m_Camera;
+		m_Camera = 0;
+	}
+
 	return;
 }
 
@@ -429,6 +514,28 @@ void D3DClass::BeginScene(float red, float green, float blue, float alpha)
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	return;
+}
+
+void D3DClass::RenderingScene()
+{
+	bool result;
+	// Generate the view matrix based on the camera's position.
+	m_Camera->Render();
+
+
+	m_Camera->GetViewMatrix(m_viewMatrix);
+
+	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	m_Model->Render(m_deviceContext);
+
+	// Render the model using the color shader.
+	//result = m_ColorShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	// Render the model using the texture shader.
+	result = m_TextureShader->Render(m_deviceContext, m_Model->GetIndexCount(), m_worldMatrix, m_viewMatrix, m_projectionMatrix, m_Model->GetTexture());
+	if (!result)
+	{
+		return ;
+	}
 }
 
 

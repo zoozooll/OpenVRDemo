@@ -5,6 +5,11 @@
 #define _D3DCLASS_H_
 
 
+#include "cameraclass.h"
+//#include "modelclass.h"
+#include "texture_model.h"
+//#include "colorshaderclass.h"
+#include "TextureShaderClass.h"
 /////////////
 // LINKING //
 /////////////
@@ -35,6 +40,7 @@ public:
 	void Shutdown();
 
 	void BeginScene(float, float, float, float);
+	void RenderingScene();
 	void EndScene();
 
 	ID3D11Device* GetDevice();
@@ -59,8 +65,14 @@ private:
 	ID3D11DepthStencilView* m_depthStencilView;
 	ID3D11RasterizerState* m_rasterState;
 	XMMATRIX m_projectionMatrix;
+	XMMATRIX m_viewMatrix;
 	XMMATRIX m_worldMatrix;
 	XMMATRIX m_orthoMatrix;
+	CameraClass* m_Camera;
+	//ModelClass m_Model;
+	TextureModel *m_Model;
+	//ColorShaderClass* m_ColorShader;
+	TextureShaderClass *m_TextureShader;
 };
 
 #endif

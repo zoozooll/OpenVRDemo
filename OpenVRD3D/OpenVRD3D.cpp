@@ -975,7 +975,7 @@ void render_frame(void)
 	}
 
 
-	result = m_DebugWindowRight->Render(pImmediateContext, 546, 0);
+	result = m_DebugWindowRight->Render(pImmediateContext, 400, 0);
 	if (!result)
 	{
 		return;

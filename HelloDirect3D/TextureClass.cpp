@@ -1,6 +1,10 @@
 #include "TextureClass.h"
+#include <string>
+#include "WICTextureLoader.h"
 
+static bool LoadPicture(char* filename, int& width, int& height);
 
+static std::wstring charToWString(const char* text);
 
 TextureClass::TextureClass()
 {
@@ -187,4 +191,27 @@ bool TextureClass::LoadTarga(char* filename, int& width, int& height)
 	targaImage = 0;
 
 	return true;
+}
+
+static bool LoadPicture(const char* filename, int& width, int& height)
+{
+	HRESULT result;
+	std::wstring wsFileName = charToWString(filename);
+	result = DirectX::CreateWICTextureFromFile(device, wsFileName.c_str(), nullptr, &m_texture);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	return true;
+}
+
+static std::wstring charToWString(const char* text)
+{
+	const size_t size = std::strlen(text);
+	std::wstring wstr;
+	if (size > 0) {
+		wstr.resize(size);
+		std::mbstowcs(&wstr[0], text, size);
+	}
+	return wstr;
 }

@@ -102,53 +102,64 @@ void ModelClass::AddCubeToScene(Matrix4 mat, std::vector<VertexType> &vertdata, 
 	int old_vertex_index = vertdata.size();
 	// triangles instead of quads
 	D3DXVECTOR3 normal;
-	normal.set(0, 0, -1);
+	normal.set(0, 0, 1);
 	AddCubeVertex(E.x, E.y, E.z, 0, 1, vertdata, normal); //Front
+	AddCubeVertex(G.x, G.y, G.z, 1, 0, vertdata, normal);
 	AddCubeVertex(F.x, F.y, F.z, 1, 1, vertdata, normal);
 	AddCubeVertex(G.x, G.y, G.z, 1, 0, vertdata, normal);
-	AddCubeVertex(G.x, G.y, G.z, 1, 0, vertdata, normal);
-	AddCubeVertex(H.x, H.y, H.z, 0, 0, vertdata, normal);
+	
 	AddCubeVertex(E.x, E.y, E.z, 0, 1, vertdata, normal);
+	AddCubeVertex(H.x, H.y, H.z, 0, 0, vertdata, normal);
 
-	normal.set(0, 0, 1);
+	normal.set(0, 0, -1);
 	AddCubeVertex(B.x, B.y, B.z, 0, 1, vertdata, normal); //Back
+	
+	AddCubeVertex(D.x, D.y, D.z, 1, 0, vertdata, normal);
 	AddCubeVertex(A.x, A.y, A.z, 1, 1, vertdata, normal);
 	AddCubeVertex(D.x, D.y, D.z, 1, 0, vertdata, normal);
-	AddCubeVertex(D.x, D.y, D.z, 1, 0, vertdata, normal);
-	AddCubeVertex(C.x, C.y, C.z, 0, 0, vertdata, normal);
+	
 	AddCubeVertex(B.x, B.y, B.z, 0, 1, vertdata, normal);
-
-	normal.set(0, 1, 0);
-	AddCubeVertex(H.x, H.y, H.z, 0, 1, vertdata, normal); //Top
-	AddCubeVertex(G.x, G.y, G.z, 1, 1, vertdata, normal);
-	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
-	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
-	AddCubeVertex(D.x, D.y, D.z, 0, 0, vertdata, normal);
-	AddCubeVertex(H.x, H.y, H.z, 0, 1, vertdata, normal);
+	AddCubeVertex(C.x, C.y, C.z, 0, 0, vertdata, normal);
 
 	normal.set(0, -1, 0);
+	AddCubeVertex(H.x, H.y, H.z, 0, 1, vertdata, normal); //Top
+	
+	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
+	AddCubeVertex(G.x, G.y, G.z, 1, 1, vertdata, normal);
+	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
+	
+	AddCubeVertex(H.x, H.y, H.z, 0, 1, vertdata, normal);
+	AddCubeVertex(D.x, D.y, D.z, 0, 0, vertdata, normal);
+
+	normal.set(0, 1, 0);
 	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal); //Bottom
+	
+	AddCubeVertex(F.x, F.y, F.z, 1, 0, vertdata, normal);
 	AddCubeVertex(B.x, B.y, B.z, 1, 1, vertdata, normal);
 	AddCubeVertex(F.x, F.y, F.z, 1, 0, vertdata, normal);
-	AddCubeVertex(F.x, F.y, F.z, 1, 0, vertdata, normal);
+	
+	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal);
 	AddCubeVertex(E.x, E.y, E.z, 0, 0, vertdata, normal);
-	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal);
-
-	normal.set(-1, 0, 0);
-	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal); //Left
-	AddCubeVertex(E.x, E.y, E.z, 1, 1, vertdata, normal);
-	AddCubeVertex(H.x, H.y, H.z, 1, 0, vertdata, normal);
-	AddCubeVertex(H.x, H.y, H.z, 1, 0, vertdata, normal);
-	AddCubeVertex(D.x, D.y, D.z, 0, 0, vertdata, normal);
-	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal);
 
 	normal.set(1, 0, 0);
+	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal); //Left
+	
+	AddCubeVertex(H.x, H.y, H.z, 1, 0, vertdata, normal);
+	AddCubeVertex(E.x, E.y, E.z, 1, 1, vertdata, normal);
+	AddCubeVertex(H.x, H.y, H.z, 1, 0, vertdata, normal);
+	
+	AddCubeVertex(A.x, A.y, A.z, 0, 1, vertdata, normal);
+	AddCubeVertex(D.x, D.y, D.z, 0, 0, vertdata, normal);
+
+	normal.set(-1, 0, 0);
 	AddCubeVertex(F.x, F.y, F.z, 0, 1, vertdata, normal); //Right
+	
+	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
 	AddCubeVertex(B.x, B.y, B.z, 1, 1, vertdata, normal);
 	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
-	AddCubeVertex(C.x, C.y, C.z, 1, 0, vertdata, normal);
-	AddCubeVertex(G.x, G.y, G.z, 0, 0, vertdata, normal);
+	
 	AddCubeVertex(F.x, F.y, F.z, 0, 1, vertdata, normal);
+	AddCubeVertex(G.x, G.y, G.z, 0, 0, vertdata, normal);
 
 	int new_vertex_index = vertdata.size();
 
@@ -193,7 +204,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	//Matrix4 mat;
 	//AddCubeToScene(mat, vertices, indices);
 
-	float m_fScale = 0.3f;
+	float m_fScale = 10.0f;
 	float m_iSceneVolumeWidth = 20,
 		m_iSceneVolumeHeight = 20,
 		m_iSceneVolumeDepth = 20;
@@ -201,26 +212,13 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	Matrix4 matScale;
 	matScale.scale(m_fScale, m_fScale, m_fScale);
 	Matrix4 matTransform;
-	matTransform.translate(
-		-((float)m_iSceneVolumeWidth * m_fScaleSpacing) / 2.f,
-		-((float)m_iSceneVolumeHeight * m_fScaleSpacing) / 2.f,
-		-((float)m_iSceneVolumeDepth * m_fScaleSpacing) / 2.f);
+	matTransform.translate(-0.5f, 0.0f,-0.5f);
 
 	Matrix4 mat = matScale * matTransform;
 
-	for (int z = 0; z< m_iSceneVolumeDepth; z++)
-	{
-		for (int y = 0; y< m_iSceneVolumeHeight; y++)
-		{
-			for (int x = 0; x< m_iSceneVolumeWidth; x++)
-			{
-				AddCubeToScene(mat, vertices, indices);
-				mat = mat * Matrix4().translate(m_fScaleSpacing, 0, 0);
-			}
-			mat = mat * Matrix4().translate(-((float)m_iSceneVolumeWidth) * m_fScaleSpacing, m_fScaleSpacing, 0);
-		}
-		mat = mat * Matrix4().translate(0, -((float)m_iSceneVolumeHeight) * m_fScaleSpacing, m_fScaleSpacing);
-	}
+	
+	AddCubeToScene(mat, vertices, indices);
+			
 
 	for (int i = 0; i < vertices.size() / 2; i++)
 	{

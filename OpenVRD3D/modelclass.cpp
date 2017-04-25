@@ -34,7 +34,11 @@ bool ModelClass::Initialize(ID3D11Device* device, WCHAR* textureFilename)
 	{
 		return false;
 	}
-
+	result = InitializeWorldMatrix();
+	if (!result)
+	{
+		return false;
+	}
 	// Load the texture for this model.
 	result = LoadTexture(device, textureFilename);
 	if (!result)
@@ -86,18 +90,18 @@ void ModelClass::AddCubeVertex(float x, float y, float z, float tx, float ty, st
 	vertdata.push_back(temp);
 }
 
-void ModelClass::AddCubeToScene(Matrix4 mat, std::vector<VertexType> &vertdata, std::vector<unsigned long> &indices)
+void ModelClass::AddCubeToScene(std::vector<VertexType> &vertdata, std::vector<unsigned long> &indices)
 {
 	// Matrix4 mat( outermat.data() );
 
-	Vector4 A = mat * Vector4(0, 0, 0, 1);
-	Vector4 B = mat * Vector4(1, 0, 0, 1);
-	Vector4 C = mat * Vector4(1, 1, 0, 1);
-	Vector4 D = mat * Vector4(0, 1, 0, 1);
-	Vector4 E = mat * Vector4(0, 0, 1, 1);
-	Vector4 F = mat * Vector4(1, 0, 1, 1);
-	Vector4 G = mat * Vector4(1, 1, 1, 1);
-	Vector4 H = mat * Vector4(0, 1, 1, 1);
+	Vector4 A = Vector4(0, 0, 0, 1);
+	Vector4 B = Vector4(1, 0, 0, 1);
+	Vector4 C = Vector4(1, 1, 0, 1);
+	Vector4 D = Vector4(0, 1, 0, 1);
+	Vector4 E = Vector4(0, 0, 1, 1);
+	Vector4 F = Vector4(1, 0, 1, 1);
+	Vector4 G = Vector4(1, 1, 1, 1);
+	Vector4 H = Vector4(0, 1, 1, 1);
 
 	int old_vertex_index = vertdata.size();
 	// triangles instead of quads
@@ -203,21 +207,8 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 
 	//Matrix4 mat;
 	//AddCubeToScene(mat, vertices, indices);
-
-	float m_fScale = 10.0f;
-	float m_iSceneVolumeWidth = 20,
-		m_iSceneVolumeHeight = 20,
-		m_iSceneVolumeDepth = 20;
-	float m_fScaleSpacing = 4.0f;
-	Matrix4 matScale;
-	matScale.scale(m_fScale, m_fScale, m_fScale);
-	Matrix4 matTransform;
-	matTransform.translate(-0.5f, 0.0f,-0.5f);
-
-	Matrix4 mat = matScale * matTransform;
-
 	
-	AddCubeToScene(mat, vertices, indices);
+	AddCubeToScene(vertices, indices);
 			
 
 	for (int i = 0; i < vertices.size() / 2; i++)
@@ -267,6 +258,22 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	m_vertexCount = vertices.size();
 	m_indexCount = indices.size();
 
+	return true;
+}
+
+bool ModelClass::InitializeWorldMatrix()
+{
+	float m_fScale = 10.0f;
+	float m_iSceneVolumeWidth = 20,
+		m_iSceneVolumeHeight = 20,
+		m_iSceneVolumeDepth = 20;
+	float m_fScaleSpacing = 4.0f;
+	Matrix4 matScale;
+	matScale.scale(m_fScale, m_fScale, m_fScale);
+	Matrix4 matTransform;
+	matTransform.translate(-0.5f, 0.0f, -0.5f);
+
+	m_worldMatrix = matScale * matTransform;
 	return true;
 }
 
@@ -346,5 +353,10 @@ void ModelClass::ReleaseTexture()
 	}
 
 	return;
+}
+
+Matrix4 ModelClass::GetWorldMatrix()
+{
+	return m_worldMatrix;
 }
 

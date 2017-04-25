@@ -50,9 +50,11 @@ public:
 	int GetIndexCount();
 
 	ID3D11ShaderResourceView* GetTexture();
+	Matrix4 GetWorldMatrix();
 
 private:
 	bool InitializeBuffers(ID3D11Device*);
+	bool InitializeWorldMatrix();
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
@@ -60,12 +62,12 @@ private:
 	void ReleaseTexture();
 
 	void AddCubeVertex(float x, float y, float z, float tx, float ty, std::vector<VertexType> &vertdata, D3DXVECTOR3 normal);
-	void ModelClass::AddCubeToScene(Matrix4 mat, std::vector<VertexType> &vertdata, std::vector<unsigned long> &indices);
+	void ModelClass::AddCubeToScene(std::vector<VertexType> &vertdata, std::vector<unsigned long> &indices);
 
 private:
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 	int m_vertexCount, m_indexCount;
-
+	Matrix4 m_worldMatrix;
 	TextureClass* m_Texture;
 };
 

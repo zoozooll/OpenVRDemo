@@ -5,8 +5,9 @@
 #include "OpenVRD3D.h"
 #include <d3d11.h>
 #include <DirectXColors.h>
+#include <chrono>
 #include "cameraclass.h"
-#include "modelclass.h"
+#include "SphereModelClass.h"
 #include "colorshaderclass.h"
 #include <DirectXMath.h>
 #include "openvr.h"
@@ -46,7 +47,7 @@ D3D_FEATURE_LEVEL		featureLevel;
 D3D11_VIEWPORT			viewport;
 CameraClass* m_CameraLeft = nullptr,
 *m_CameraRight = nullptr;
-ModelClass* m_Model = nullptr;
+SphereModelClass* m_Model = nullptr;
 ColorShaderClass* m_ColorShader = nullptr;
 RenderTextureClass* m_RenderTextureLeft, *m_RenderTextureRight;
 DebugWindowClass* m_DebugWindowLeft, *m_DebugWindowRight;
@@ -753,14 +754,14 @@ bool init(HWND hWnd)
 	m_CameraRight->SetPosition(1.5f, 0.0f, -10.0f);
 
 	// Create the model object.
-	m_Model = new ModelClass;
+	m_Model = new SphereModelClass;
 	if (!m_Model)
 	{
 		return false;
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(pDevice, L"cube_texture.png");
+	result = m_Model->Initialize(pDevice, L"0541us9pbfdx.png");
 	if (!result)
 	{
 		MessageBox(hWnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -875,13 +876,16 @@ void TurnZBufferOff()
 
 
 bool errorshown = false;
+int frames;
+long timeDelays;
 
 bool RenderScene(vr::Hmd_Eye nEye)
 {
 	bool result;
 	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix, orthoMatrix;
-
-
+	worldMatrix = m_Model->GetWorldMatrix();
+	
+	
 	projectionMatrix = GetCurrentViewProjectionMatrix(nEye);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
@@ -895,7 +899,19 @@ bool RenderScene(vr::Hmd_Eye nEye)
 		return false;
 		MyDebug(_T("render failed"));
 	}
-
+	frames++;
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+	long curMilliSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	long timethrought = (curMilliSeconds - timeDelays) / 1000L;
+	if (timethrought > 3)
+	{
+		char debugLogString[512];
+		sprintf(debugLogString, "FPS %f \n", (float)frames / (float)timethrought);
+		OutputDebugStringA(debugLogString);
+		timeDelays = curMilliSeconds;
+		frames = 0;
+	}
 	return true;
 }
 

@@ -54,6 +54,9 @@
     <ClInclude Include="Vectors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SphereModelClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="textureclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereModelclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -87,6 +87,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\workspaces\DirectXTK\Inc;D:\workspaces\openvr\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -187,9 +188,11 @@ XCOPY /D /Y D:\workspaces\openvr\bin\win64\openvr_api.dll "$(TargetDir)"</Comman
     <ClInclude Include="OpenVRD3D.h" />
     <ClInclude Include="rendertextureclass.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SphereModelClass.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="textureclass.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Vectors.h" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +203,7 @@ XCOPY /D /Y D:\workspaces\openvr\bin\win64\openvr_api.dll "$(TargetDir)"</Comman
     <ClCompile Include="modelclass.cpp" />
     <ClCompile Include="OpenVRD3D.cpp" />
     <ClCompile Include="rendertextureclass.cpp" />
+    <ClCompile Include="SphereModelclass.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

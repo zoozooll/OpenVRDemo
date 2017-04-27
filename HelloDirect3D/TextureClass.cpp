@@ -2,9 +2,7 @@
 #include <string>
 #include "WICTextureLoader.h"
 
-static bool LoadPicture(char* filename, int& width, int& height);
-
-static std::wstring charToWString(const char* text);
+static bool LoadPicture(const wchar_t* filename, ID3D11Device *device, ID3D11ShaderResourceView** m_texture);
 
 TextureClass::TextureClass()
 {
@@ -19,7 +17,7 @@ TextureClass::~TextureClass()
 
 }
 
-bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* filename)
+bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wchar_t* filename)
 {
 	bool result;
 	int width, height;
@@ -28,7 +26,7 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	unsigned int rowPitch;
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 
-	result = LoadTarga(filename, width, height);
+	/*result = LoadTarga(filename, width, height);
 	if (!result)
 	{
 		return false;
@@ -58,6 +56,11 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	srvDesc.Texture2D.MipLevels = -1;
 	hResult = device->CreateShaderResourceView(m_texture, &srvDesc, &m_textureView);
 	if (FAILED(hResult))
+	{
+		return false;
+	}*/
+	result = LoadPicture(filename, device, &m_textureView);
+	if (!result)
 	{
 		return false;
 	}
@@ -193,11 +196,12 @@ bool TextureClass::LoadTarga(char* filename, int& width, int& height)
 	return true;
 }
 
-static bool LoadPicture(const char* filename, int& width, int& height)
+static bool LoadPicture(const wchar_t* filename, ID3D11Device *device, ID3D11ShaderResourceView** m_texture)
 {
 	HRESULT result;
-	std::wstring wsFileName = charToWString(filename);
-	result = DirectX::CreateWICTextureFromFile(device, wsFileName.c_str(), nullptr, &m_texture);
+	//std::wstring wsFileName = charToWString(filename);
+	//DirectX::CreateWICTextureFromFile(device, filename, NULL, &m_texture);
+	result = DirectX::CreateWICTextureFromFile(device, filename, nullptr, m_texture);
 	if (FAILED(result))
 	{
 		return false;
@@ -205,13 +209,3 @@ static bool LoadPicture(const char* filename, int& width, int& height)
 	return true;
 }
 
-static std::wstring charToWString(const char* text)
-{
-	const size_t size = std::strlen(text);
-	std::wstring wstr;
-	if (size > 0) {
-		wstr.resize(size);
-		std::mbstowcs(&wstr[0], text, size);
-	}
-	return wstr;
-}

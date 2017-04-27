@@ -116,5 +116,11 @@
     <Image Include="stone01.tga">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="0541us9pbfdx.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="20170424162128394.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

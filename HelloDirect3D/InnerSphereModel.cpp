@@ -22,7 +22,7 @@ InnerShereModel::~InnerShereModel()
 }
 
 
-bool InnerShereModel::Initialize(ID3D11Device* device,  ID3D11DeviceContext *deviceContext, char *textureFilename)
+bool InnerShereModel::Initialize(ID3D11Device* device,  ID3D11DeviceContext *deviceContext, wchar_t *textureFilename)
 {
 	bool result;
 
@@ -291,7 +291,7 @@ void InnerShereModel::RenderBuffers(ID3D11DeviceContext* deviceContext)
 	return;
 }
 
-bool InnerShereModel::LoadTexture(ID3D11Device *device, ID3D11DeviceContext *deviceContext, char *filename)
+bool InnerShereModel::LoadTexture(ID3D11Device *device, ID3D11DeviceContext *deviceContext, wchar_t *filename)
 {
 	bool result;
 	m_Texture = new TextureClass();

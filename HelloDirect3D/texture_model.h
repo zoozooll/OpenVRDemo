@@ -27,7 +27,7 @@ public:
 	TextureModel(const TextureModel&);
 	~TextureModel();
 
-	bool Initialize(ID3D11Device *, ID3D11DeviceContext *, char *);
+	bool Initialize(ID3D11Device *, ID3D11DeviceContext *, wchar_t *);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 	int GetIndexCount();
@@ -37,7 +37,7 @@ private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
-	bool LoadTexture(ID3D11Device *, ID3D11DeviceContext *, char *);
+	bool LoadTexture(ID3D11Device *, ID3D11DeviceContext *, wchar_t *);
 	void ReleaseTexture();
 
 private:

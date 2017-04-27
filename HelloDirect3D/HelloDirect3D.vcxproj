@@ -56,6 +56,8 @@
     <ResourceCompile Include="HelloDirect3D.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="0541us9pbfdx.png" />
+    <Image Include="20170424162128394.jpg" />
     <Image Include="icon1.ico" />
     <Image Include="stone01.tga" />
   </ItemGroup>

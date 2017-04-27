@@ -372,7 +372,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(m_device, m_deviceContext, "stone01.tga");
+	result = m_Model->Initialize(m_device, m_deviceContext, L"20170424162128394.jpg");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
